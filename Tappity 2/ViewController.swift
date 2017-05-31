@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     var gameStarted = true
     var highScores = [String()]
     var ifReset = false
+    let randomColor = [UIColor.black, UIColor.blue, UIColor.darkGray, UIColor.green, UIColor.red, UIColor.cyan, UIColor.cyan]
     
     
     
@@ -45,6 +46,7 @@ class ViewController: UIViewController {
         highScores.append(score.text!)
         //self.highScoreDisplay.text = self.highScores=
         time.text = String(count)
+        score.text = String(taps)
         print("timer ran \(count) times")
             }
     
@@ -86,8 +88,11 @@ class ViewController: UIViewController {
 
     @IBAction func buttonTapped(sender: UIButton) {
         if gameStarted == false {
+            
+           // let randomColorInt = randomColor[randomInt]
             taps += 1
             score.text = String(taps)
+            //view.backgroundColor = randomColorInt
         }
        
     }
