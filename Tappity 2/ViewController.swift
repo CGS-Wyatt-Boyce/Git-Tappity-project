@@ -24,16 +24,21 @@ class ViewController: UIViewController {
     
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
             }
-    func alert() {
-        
+    func alertFunc() {
+        let alertScore = score.text!
+        let alert = UIAlertController(title: "GAME OVER", message: "You clicked the button \( alertScore) times in \(30 - count) seconds.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default , handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func reset() {
         ifReset = true
+        alertFunc()
          count = 30
         taps = 0
         gameStarted = true
@@ -86,7 +91,8 @@ class ViewController: UIViewController {
         }
        
     }
-
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
