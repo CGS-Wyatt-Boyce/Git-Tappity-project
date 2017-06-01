@@ -13,10 +13,13 @@ class ViewController: UIViewController {
     @IBOutlet var time: UILabel!
     @IBOutlet var score: UILabel!
     @IBOutlet var highScoreDisplay: UILabel!
-    @IBOutlet var endGame: UIAlertAction!
+    @IBOutlet var timeLabel: UITextField!
+    @IBOutlet var scoreLabel: UITextField!
+    @IBOutlet var highScoreLabel: UILabel!
    
     
     var  taps = 0
+    var highScore = 0
     var count = 30
     var gameStarted = true
     var highScores = [String()]
@@ -43,8 +46,6 @@ class ViewController: UIViewController {
          count = 30
         taps = 0
         gameStarted = true
-        highScores.append(score.text!)
-        //self.highScoreDisplay.text = self.highScores=
         time.text = String(count)
         score.text = String(taps)
         print("timer ran \(count) times")
@@ -55,16 +56,16 @@ class ViewController: UIViewController {
     func gameHasStarted() {
         
         if gameStarted == true {
+            print("gameStarted running? \(gameStarted)")
             gameStarted = false
         }
         print("Has the game not started? \(gameStarted)")
-        let _  = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true)  { (timer) in
-            
+        let _  = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true)  { (cow) in
             if self.ifReset == true {
-                timer.invalidate()
+                cow.invalidate()
                 self.count += 1
-                self.ifReset = false
                 print("Has it not reset? \(self.ifReset)")
+                self.ifReset = false
             }
             
             self.count -= 1
@@ -72,10 +73,17 @@ class ViewController: UIViewController {
             
             
             if self.count == 0 {
-                timer.invalidate()
+                cow.invalidate()
+                if self.taps >= self.highScore {
+                    self.highScoreDisplay.text = self.score.text
+                    self.highScore = self.taps
+                }
                 self.reset()
                 self.count = 30
                 self.time.text = String(self.count)
+                self.gameStarted = true
+                self.ifReset = false
+                
             }
         }
     }
@@ -88,11 +96,18 @@ class ViewController: UIViewController {
 
     @IBAction func buttonTapped(sender: UIButton) {
         if gameStarted == false {
-            
-           // let randomColorInt = randomColor[randomInt]
+            let randomInt = Int(arc4random_uniform(UInt32(randomColor.count)))
+           let randomColorInt = randomColor[randomInt]
             taps += 1
             score.text = String(taps)
-            //view.backgroundColor = randomColorInt
+            view.backgroundColor = randomColorInt
+            time.backgroundColor = randomColorInt
+            score.backgroundColor = randomColorInt
+            timeLabel.backgroundColor = randomColorInt
+            scoreLabel.backgroundColor = randomColorInt
+            highScoreDisplay.backgroundColor = randomColorInt
+            highScoreLabel.backgroundColor = randomColorInt
+            
         }
        
     }
