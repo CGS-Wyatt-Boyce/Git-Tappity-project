@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     @IBOutlet var timeLabel: UITextField!
     @IBOutlet var scoreLabel: UITextField!
     @IBOutlet var highScoreLabel: UILabel!
+
    
     
     var  taps = 0
@@ -24,7 +25,7 @@ class ViewController: UIViewController {
     var gameStarted = true
     var highScores = [String()]
     var ifReset = false
-    let randomColor = [UIColor.black, UIColor.blue, UIColor.darkGray, UIColor.green, UIColor.red, UIColor.cyan, UIColor.cyan]
+    let randomColor = [UIColor.black, UIColor.blue, UIColor.darkGray, UIColor.green, UIColor.red, UIColor.cyan, UIColor.cyan, UIColor.brown, UIColor.gray, UIColor.yellow]
     
     
     
@@ -60,9 +61,9 @@ class ViewController: UIViewController {
             gameStarted = false
         }
         print("Has the game not started? \(gameStarted)")
-        let _  = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true)  { (cow) in
+        let _  = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true)  { (timer) in
             if self.ifReset == true {
-                cow.invalidate()
+                timer.invalidate()
                 self.count += 1
                 print("Has it not reset? \(self.ifReset)")
                 self.ifReset = false
@@ -73,10 +74,12 @@ class ViewController: UIViewController {
             
             
             if self.count == 0 {
-                cow.invalidate()
+                timer.invalidate()
                 if self.taps >= self.highScore {
                     self.highScoreDisplay.text = self.score.text
+                    self.highScores.append(self.score.text!)
                     self.highScore = self.taps
+                
                 }
                 self.reset()
                 self.count = 30
@@ -88,13 +91,11 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func startGame() {
-        if gameStarted == true {
-             gameHasStarted()
-        }
-    }
 
     @IBAction func buttonTapped(sender: UIButton) {
+        if gameStarted == true {
+            gameHasStarted()
+        }
         if gameStarted == false {
             let randomInt = Int(arc4random_uniform(UInt32(randomColor.count)))
            let randomColorInt = randomColor[randomInt]
