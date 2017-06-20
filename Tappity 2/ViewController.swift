@@ -12,11 +12,8 @@ class ViewController: UIViewController {
     
     @IBOutlet var time: UILabel!
     @IBOutlet var score: UILabel!
-    @IBOutlet var highScoreDisplay: UILabel!
-    @IBOutlet var timeLabel: UITextField!
-    @IBOutlet var scoreLabel: UITextField!
-    @IBOutlet var highScoreLabel: UILabel!
-
+    @IBOutlet var highScoreDisplay: UIButton!
+   
    
     
     var  taps = 0
@@ -41,7 +38,7 @@ class ViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func reset() {
+    func reset() {
         ifReset = true
         alertFunc()
          count = 30
@@ -76,10 +73,15 @@ class ViewController: UIViewController {
             if self.count == 0 {
                 timer.invalidate()
                 if self.taps >= self.highScore {
-                    self.highScoreDisplay.text = self.score.text
+                    self.highScoreDisplay.setTitle(self.score.text, for: UIControlState.normal)
                     self.highScores.append(self.score.text!)
+                    print(self.highScores)
                     self.highScore = self.taps
-                
+                    
+                    let highscoreAlert = UIAlertController(title: self.title, message: "Highscore Achived!", preferredStyle: .alert)
+                        highscoreAlert.addTextField(configurationHandler: { (textField) -> Void in
+                            textField.text = "Enter your name"
+                    })
                 }
                 self.reset()
                 self.count = 30
@@ -102,12 +104,7 @@ class ViewController: UIViewController {
             taps += 1
             score.text = String(taps)
             view.backgroundColor = randomColorInt
-            time.backgroundColor = randomColorInt
-            score.backgroundColor = randomColorInt
-            timeLabel.backgroundColor = randomColorInt
-            scoreLabel.backgroundColor = randomColorInt
-            highScoreDisplay.backgroundColor = randomColorInt
-            highScoreLabel.backgroundColor = randomColorInt
+                       
             
         }
        
